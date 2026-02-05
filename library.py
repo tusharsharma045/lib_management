@@ -202,6 +202,7 @@ def view_assigned_books():
     print(f"{'ID':<5} {'Title':<25} {'User':<15} {'Assigned At':<20} {'Duration':<15}")
     print("-" * 80)
     
+    
     for book_id, info in assigned_books.items():
         time_str = info["assigned_time"].strftime('%Y-%m-%d %H:%M:%S')
         
