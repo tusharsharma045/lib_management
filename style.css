@@ -331,6 +331,99 @@ body {
     font-style: italic;
 }
 
+/* CATEGORY GRID */
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-top: 10px;
+}
+
+.category-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 28px 20px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    border-top: 4px solid #667eea;
+    transition: all 0.25s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.18);
+    border-top-color: #764ba2;
+}
+
+.cat-icon {
+    font-size: 2.4rem;
+}
+
+.cat-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #333;
+}
+
+.cat-count {
+    font-size: 0.82rem;
+    color: #888;
+    background: #f0f2f5;
+    padding: 3px 12px;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+.card-all        { border-top-color: #667eea; }
+.card-webdev     { border-top-color: #ff6b6b; }
+.card-ds         { border-top-color: #51cf66; }
+.card-mag        { border-top-color: #fcc419; }
+.card-prog       { border-top-color: #339af0; }
+.card-datasci    { border-top-color: #845ef7; }
+.card-db         { border-top-color: #20c997; }
+.card-devops     { border-top-color: #ff922b; }
+.card-design     { border-top-color: #f06595; }
+.card-fiction     { border-top-color: #22b8cf; }
+.card-science    { border-top-color: #5c7cfa; }
+.card-math       { border-top-color: #e64980; }
+
+.category-card:hover .cat-icon {
+    transform: scale(1.15);
+    transition: transform 0.2s;
+}
+
+.btn-back {
+    background: #f0f2f5;
+    color: #555;
+    border: 2px solid #e0e0e0;
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 16px;
+    transition: all 0.2s;
+}
+
+.btn-back:hover {
+    background: #667eea;
+    color: #fff;
+    border-color: #667eea;
+}
+
+.category-heading {
+    font-size: 1.25rem;
+    color: #444;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #e9ecef;
+}
+
 /* TOOLBAR */
 .toolbar {
     display: flex;
@@ -676,6 +769,10 @@ body {
     }
 
     .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .category-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 

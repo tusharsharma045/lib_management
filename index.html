@@ -98,29 +98,100 @@
             <!-- ALL BOOKS -->
             <section id="allBooks" class="page">
                 <h2 class="page-title">&#128214; All Books</h2>
-                <div class="toolbar">
-                    <select id="filterStatus" onchange="renderAllBooks()">
-                        <option value="all">All Status</option>
-                        <option value="available">Available Only</option>
-                        <option value="assigned">Assigned Only</option>
-                    </select>
-                    <select id="filterGenre" onchange="renderAllBooks()">
-                        <option value="all">All Genres</option>
-                    </select>
-                    <select id="sortBooks" onchange="renderAllBooks()">
-                        <option value="id">Sort by ID</option>
-                        <option value="title">Sort by Title</option>
-                        <option value="author">Sort by Author</option>
-                    </select>
+                <p class="page-desc">Select a category to browse books</p>
+
+                <!-- Category Cards View -->
+                <div id="categoryView" class="category-grid">
+                    <div class="category-card card-all" onclick="openCategory('all')">
+                        <span class="cat-icon">&#128218;</span>
+                        <span class="cat-name">All Books</span>
+                        <span class="cat-count" id="countAll">0</span>
+                    </div>
+                    <div class="category-card card-webdev" onclick="openCategory('Web Development')">
+                        <span class="cat-icon">&#127760;</span>
+                        <span class="cat-name">Web Development</span>
+                        <span class="cat-count" id="countWebDev">0</span>
+                    </div>
+                    <div class="category-card card-ds" onclick="openCategory('Data Structures')">
+                        <span class="cat-icon">&#128200;</span>
+                        <span class="cat-name">Data Structures</span>
+                        <span class="cat-count" id="countDS">0</span>
+                    </div>
+                    <div class="category-card card-mag" onclick="openCategory('Magazines')">
+                        <span class="cat-icon">&#128240;</span>
+                        <span class="cat-name">Magazines</span>
+                        <span class="cat-count" id="countMag">0</span>
+                    </div>
+                    <div class="category-card card-prog" onclick="openCategory('Programming')">
+                        <span class="cat-icon">&#128187;</span>
+                        <span class="cat-name">Programming</span>
+                        <span class="cat-count" id="countProg">0</span>
+                    </div>
+                    <div class="category-card card-datasci" onclick="openCategory('Data Science')">
+                        <span class="cat-icon">&#129302;</span>
+                        <span class="cat-name">Data Science</span>
+                        <span class="cat-count" id="countDataSci">0</span>
+                    </div>
+                    <div class="category-card card-db" onclick="openCategory('Database')">
+                        <span class="cat-icon">&#128451;</span>
+                        <span class="cat-name">Database</span>
+                        <span class="cat-count" id="countDB">0</span>
+                    </div>
+                    <div class="category-card card-devops" onclick="openCategory('DevOps')">
+                        <span class="cat-icon">&#9881;</span>
+                        <span class="cat-name">DevOps</span>
+                        <span class="cat-count" id="countDevOps">0</span>
+                    </div>
+                    <div class="category-card card-design" onclick="openCategory('Design')">
+                        <span class="cat-icon">&#127912;</span>
+                        <span class="cat-name">Design</span>
+                        <span class="cat-count" id="countDesign">0</span>
+                    </div>
+                    <div class="category-card card-fiction" onclick="openCategory('Fiction')">
+                        <span class="cat-icon">&#128214;</span>
+                        <span class="cat-name">Fiction</span>
+                        <span class="cat-count" id="countFiction">0</span>
+                    </div>
+                    <div class="category-card card-science" onclick="openCategory('Science')">
+                        <span class="cat-icon">&#128300;</span>
+                        <span class="cat-name">Science</span>
+                        <span class="cat-count" id="countScience">0</span>
+                    </div>
+                    <div class="category-card card-math" onclick="openCategory('Mathematics')">
+                        <span class="cat-icon">&#128290;</span>
+                        <span class="cat-name">Mathematics</span>
+                        <span class="cat-count" id="countMath">0</span>
+                    </div>
                 </div>
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>ID</th><th>Title</th><th>Author</th><th>Genre</th><th>Status</th><th>Issue Count</th><th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="bookList"></tbody>
-                </table>
+
+                <!-- Books Table View (hidden initially) -->
+                <div id="booksTableView" style="display: none;">
+                    <button class="btn btn-back" onclick="backToCategories()">&#8592; Back to Categories</button>
+                    <h3 id="categoryHeading" class="category-heading"></h3>
+                    <div class="toolbar">
+                        <select id="filterStatus" onchange="renderAllBooks()">
+                            <option value="all">All Status</option>
+                            <option value="available">Available Only</option>
+                            <option value="assigned">Assigned Only</option>
+                        </select>
+                        <select id="filterGenre" onchange="renderAllBooks()">
+                            <option value="all">All Genres</option>
+                        </select>
+                        <select id="sortBooks" onchange="renderAllBooks()">
+                            <option value="id">Sort by ID</option>
+                            <option value="title">Sort by Title</option>
+                            <option value="author">Sort by Author</option>
+                        </select>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th><th>Title</th><th>Author</th><th>Genre</th><th>Status</th><th>Issue Count</th><th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookList"></tbody>
+                    </table>
+                </div>
             </section>
 
             <!-- ASSIGNED BOOKS -->
@@ -161,6 +232,8 @@
                                 <option value="Database">Database</option>
                                 <option value="DevOps">DevOps</option>
                                 <option value="Design">Design</option>
+                                <option value="Data Structures">Data Structures</option>
+                                <option value="Magazines">Magazines</option>
                                 <option value="Fiction">Fiction</option>
                                 <option value="Science">Science</option>
                                 <option value="Mathematics">Mathematics</option>

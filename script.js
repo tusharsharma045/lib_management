@@ -26,6 +26,36 @@ let books = {
     18: { title: "Don't Make Me Think",          author: "Steve Krug",          genre: "Design",           available: true,  issueCount: 2 },
     19: { title: "The Art of Computer Science",  author: "Donald Knuth",        genre: "Programming",      available: true,  issueCount: 3 },
     20: { title: "MongoDB: The Definitive Guide", author: "Shannon Bradshaw",   genre: "Database",         available: true,  issueCount: 1 },
+    21: { title: "CSS: The Definitive Guide",     author: "Eric A. Meyer",       genre: "Web Development",  available: true,  issueCount: 4 },
+    22: { title: "Full-Stack Vue.js",              author: "Hassan Djirdeh",      genre: "Web Development",  available: true,  issueCount: 2 },
+    23: { title: "Angular in Action",              author: "Jeremy Wilken",       genre: "Web Development",  available: true,  issueCount: 3 },
+    24: { title: "Web Performance in Action",      author: "Jeremy Wagner",       genre: "Web Development",  available: false, issueCount: 5 },
+    25: { title: "Progressive Web Apps",           author: "Jason Grigsby",       genre: "Web Development",  available: true,  issueCount: 1 },
+    26: { title: "Algorithms Unlocked",            author: "Thomas Cormen",       genre: "Data Structures",  available: true,  issueCount: 6 },
+    27: { title: "Grokking Algorithms",            author: "Aditya Bhargava",     genre: "Data Structures",  available: true,  issueCount: 8 },
+    28: { title: "Algorithm Design Manual",        author: "Steven Skiena",       genre: "Data Structures",  available: false, issueCount: 4 },
+    29: { title: "Data Structures in Java",        author: "Robert Lafore",       genre: "Data Structures",  available: true,  issueCount: 3 },
+    30: { title: "Cracking the Coding Interview",  author: "Gayle McDowell",      genre: "Data Structures",  available: true,  issueCount: 10 },
+    31: { title: "National Geographic",            author: "Various Authors",     genre: "Magazines",        available: true,  issueCount: 15 },
+    32: { title: "TIME Magazine",                  author: "Various Authors",     genre: "Magazines",        available: true,  issueCount: 12 },
+    33: { title: "Wired Magazine",                 author: "Various Authors",     genre: "Magazines",        available: false, issueCount: 9 },
+    34: { title: "Scientific American",            author: "Various Authors",     genre: "Magazines",        available: true,  issueCount: 7 },
+    35: { title: "The Economist",                  author: "Various Authors",     genre: "Magazines",        available: true,  issueCount: 11 },
+    36: { title: "Forbes Magazine",                author: "Various Authors",     genre: "Magazines",        available: true,  issueCount: 6 },
+    37: { title: "Effective Java",                 author: "Joshua Bloch",        genre: "Programming",      available: true,  issueCount: 9 },
+    38: { title: "The C Programming Language",     author: "Brian Kernighan",     genre: "Programming",      available: true,  issueCount: 7 },
+    39: { title: "Rust Programming Language",      author: "Steve Klabnik",       genre: "Programming",      available: true,  issueCount: 2 },
+    40: { title: "Python Data Science Handbook",   author: "Jake VanderPlas",     genre: "Data Science",     available: true,  issueCount: 5 },
+    41: { title: "R for Data Science",             author: "Hadley Wickham",      genre: "Data Science",     available: false, issueCount: 4 },
+    42: { title: "Kubernetes in Action",           author: "Marko Luksa",         genre: "DevOps",           available: true,  issueCount: 3 },
+    43: { title: "The Phoenix Project",            author: "Gene Kim",            genre: "DevOps",           available: true,  issueCount: 8 },
+    44: { title: "Designing Interfaces",           author: "Jenifer Tidwell",     genre: "Design",           available: true,  issueCount: 2 },
+    45: { title: "Refactoring UI",                 author: "Adam Wathan",         genre: "Design",           available: true,  issueCount: 6 },
+    46: { title: "Database Internals",             author: "Alex Petrov",         genre: "Database",         available: true,  issueCount: 3 },
+    47: { title: "PostgreSQL Up & Running",        author: "Regina Obe",          genre: "Database",         available: true,  issueCount: 1 },
+    48: { title: "Dune",                           author: "Frank Herbert",       genre: "Fiction",          available: true,  issueCount: 14 },
+    49: { title: "The Hitchhiker's Guide",         author: "Douglas Adams",       genre: "Fiction",          available: true,  issueCount: 10 },
+    50: { title: "A Brief History of Time",        author: "Stephen Hawking",     genre: "Science",          available: true,  issueCount: 8 },
 };
 
 // Pre-assigned books (IDs 4, 6, 8, 12, 16 are marked available:false)
@@ -35,6 +65,10 @@ let assigned = {
     8:  { user: "Ravi Kumar",    title: "The Pragmatic Programmer",      time: "2026-02-18T10:00:00.000Z" },
     12: { user: "Sneha Gupta",   title: "Deep Learning",                 time: "2026-02-23T16:45:00.000Z" },
     16: { user: "Karan Singh",   title: "Hands-On ML with Scikit-Learn", time: "2026-02-24T08:00:00.000Z" },
+    24: { user: "Meera Joshi",   title: "Web Performance in Action",     time: "2026-02-21T11:00:00.000Z" },
+    28: { user: "Vikram Rao",    title: "Algorithm Design Manual",       time: "2026-02-19T13:30:00.000Z" },
+    33: { user: "Anita Desai",   title: "Wired Magazine",                time: "2026-02-22T09:00:00.000Z" },
+    41: { user: "Rahul Nair",    title: "R for Data Science",            time: "2026-02-23T10:15:00.000Z" },
 };
 
 // Full issue/return history log
@@ -52,9 +86,13 @@ let historyLog = [
     { book: "The Pragmatic Programmer",  user: "Ravi Kumar",    action: "Issued",   date: "2026-02-18T10:00:00.000Z" },
     { book: "Deep Learning",             user: "Sneha Gupta",   action: "Issued",   date: "2026-02-23T16:45:00.000Z" },
     { book: "Hands-On ML with Scikit-Learn", user: "Karan Singh", action: "Issued", date: "2026-02-24T08:00:00.000Z" },
+    { book: "Web Performance in Action",     user: "Meera Joshi", action: "Issued", date: "2026-02-21T11:00:00.000Z" },
+    { book: "Algorithm Design Manual",       user: "Vikram Rao",  action: "Issued", date: "2026-02-19T13:30:00.000Z" },
+    { book: "Wired Magazine",                user: "Anita Desai", action: "Issued", date: "2026-02-22T09:00:00.000Z" },
+    { book: "R for Data Science",            user: "Rahul Nair",  action: "Issued", date: "2026-02-23T10:15:00.000Z" },
 ];
 
-let nextId = 21;
+let nextId = 51;
 let currentBookId = null;
 
 // UTILITY
@@ -101,7 +139,7 @@ function navigate(sectionId, menuItem) {
     // Render appropriate content
     switch (sectionId) {
         case 'dashboard':     renderDashboard(); break;
-        case 'allBooks':      populateGenreFilter(); renderAllBooks(); break;
+        case 'allBooks':      showCategoryView(); break;
         case 'assignedBooks': renderAssigned(); break;
         case 'mostIssued':    renderMostIssued(); break;
         case 'history':       renderHistory(); break;
@@ -162,6 +200,71 @@ function renderDashboard() {
 
 // ALL BOOKS
 
+let activeCategory = 'all';
+
+function getCategoryCounts() {
+    const counts = {};
+    Object.values(books).forEach(b => {
+        counts[b.genre] = (counts[b.genre] || 0) + 1;
+    });
+    return counts;
+}
+
+function showCategoryView() {
+    $('categoryView').style.display = '';
+    $('booksTableView').style.display = 'none';
+    activeCategory = 'all';
+
+    // Update category counts
+    const counts = getCategoryCounts();
+    const total = Object.values(books).length;
+    $('countAll').textContent = total + ' books';
+    $('countWebDev').textContent = (counts['Web Development'] || 0) + ' books';
+    $('countDS').textContent = (counts['Data Structures'] || 0) + ' books';
+    $('countMag').textContent = (counts['Magazines'] || 0) + ' books';
+    $('countProg').textContent = (counts['Programming'] || 0) + ' books';
+    $('countDataSci').textContent = (counts['Data Science'] || 0) + ' books';
+    $('countDB').textContent = (counts['Database'] || 0) + ' books';
+    $('countDevOps').textContent = (counts['DevOps'] || 0) + ' books';
+    $('countDesign').textContent = (counts['Design'] || 0) + ' books';
+    $('countFiction').textContent = (counts['Fiction'] || 0) + ' books';
+    $('countScience').textContent = (counts['Science'] || 0) + ' books';
+    $('countMath').textContent = (counts['Mathematics'] || 0) + ' books';
+}
+
+function openCategory(category) {
+    activeCategory = category;
+    $('categoryView').style.display = 'none';
+    $('booksTableView').style.display = '';
+    $('categoryHeading').textContent = category === 'all' ? '📚 All Books' : category;
+    $('filterStatus').value = 'all';
+    populateGenreFilter();
+    if (category !== 'all') {
+        $('filterGenre').value = category;
+    } else {
+        $('filterGenre').value = 'all';
+    }
+    renderAllBooks();
+}
+
+function backToCategories() {
+    showCategoryView();
+}
+
+function filterByCategory(category, btn) {
+    activeCategory = category;
+    document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    // Sync the genre dropdown
+    const genreSelect = $('filterGenre');
+    if (category === 'all') {
+        genreSelect.value = 'all';
+    } else {
+        genreSelect.value = category;
+    }
+    renderAllBooks();
+}
+
 function populateGenreFilter() {
     const genres = [...new Set(Object.values(books).map(b => b.genre))].sort();
     const select = $('filterGenre');
@@ -178,10 +281,13 @@ function renderAllBooks() {
 
     let entries = Object.entries(books);
 
+    // Filter by active category tab
+    if (activeCategory !== 'all') entries = entries.filter(([, b]) => b.genre === activeCategory);
+
     // Filter
     if (status === 'available') entries = entries.filter(([, b]) => b.available);
     if (status === 'assigned') entries = entries.filter(([, b]) => !b.available);
-    if (genre !== 'all') entries = entries.filter(([, b]) => b.genre === genre);
+    if (genre !== 'all' && activeCategory === 'all') entries = entries.filter(([, b]) => b.genre === genre);
 
     // Sort
     entries.sort((a, b) => {
