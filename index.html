@@ -7,69 +7,238 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>📚 Library Management System</h1>
-        <div class="card">
-            <!-- Navigation -->
-            <div class="nav">
-                <button class="active" onclick="showTab('books')">All Books</button>
-                <button onclick="showTab('add')">Add Book</button>
-                <button onclick="showTab('assigned')">Assigned</button>
-            </div>
-            
+
+    <!-- ========== TOP NAVBAR ========== -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <span class="navbar-logo">&#128218;</span>
+            <span class="navbar-title">LibManager</span>
+        </div>
+        <div class="navbar-search">
+            <input type="text" id="globalSearch" placeholder="Search books, authors..." oninput="handleGlobalSearch(this.value)">
+        </div>
+        <div class="navbar-info">
+            <span id="clockDisplay"></span>
+            <span class="navbar-user">&#128100; Admin</span>
+        </div>
+    </nav>
+
+    <!-- ========== MAIN LAYOUT ========== -->
+    <div class="app-layout">
+
+        <!-- ===== SIDEBAR MENU ===== -->
+        <aside class="sidebar">
+            <ul class="menu">
+                <li class="menu-label">MAIN</li>
+                <li class="menu-item active" data-section="dashboard" onclick="navigate('dashboard', this)">
+                    <span class="menu-icon">&#128202;</span> Dashboard
+                </li>
+                <li class="menu-item" data-section="allBooks" onclick="navigate('allBooks', this)">
+                    <span class="menu-icon">&#128214;</span> View All Books
+                </li>
+                <li class="menu-item" data-section="assignedBooks" onclick="navigate('assignedBooks', this)">
+                    <span class="menu-icon">&#128203;</span> Assigned Books
+                </li>
+
+                <li class="menu-label">MANAGE</li>
+                <li class="menu-item" data-section="addBook" onclick="navigate('addBook', this)">
+                    <span class="menu-icon">&#10133;</span> Add New Book
+                </li>
+                <li class="menu-item" data-section="mostIssued" onclick="navigate('mostIssued', this)">
+                    <span class="menu-icon">&#128293;</span> Most Issued Books
+                </li>
+                <li class="menu-item" data-section="history" onclick="navigate('history', this)">
+                    <span class="menu-icon">&#128336;</span> Issue History
+                </li>
+
+                <li class="menu-label">TOOLS</li>
+                <li class="menu-item" data-section="searchBooks" onclick="navigate('searchBooks', this)">
+                    <span class="menu-icon">&#128269;</span> Search &amp; Filter
+                </li>
+            </ul>
+        </aside>
+
+        <!-- ===== CONTENT AREA ===== -->
+        <main class="content">
             <div id="alert" class="alert"></div>
 
-            <!-- Books Table -->
-            <div id="books" class="section active">
-                <h2>All Books</h2>
-                <table>
+            <!-- ---------- DASHBOARD ---------- -->
+            <section id="dashboard" class="page active">
+                <h2 class="page-title">&#128202; Dashboard</h2>
+                <div class="stats-grid">
+                    <div class="stat-card stat-total">
+                        <div class="stat-number" id="statTotal">0</div>
+                        <div class="stat-label">Total Books</div>
+                    </div>
+                    <div class="stat-card stat-available">
+                        <div class="stat-number" id="statAvailable">0</div>
+                        <div class="stat-label">Available</div>
+                    </div>
+                    <div class="stat-card stat-assigned">
+                        <div class="stat-number" id="statAssigned">0</div>
+                        <div class="stat-label">Assigned</div>
+                    </div>
+                    <div class="stat-card stat-issues">
+                        <div class="stat-number" id="statTotalIssues">0</div>
+                        <div class="stat-label">Total Issues</div>
+                    </div>
+                </div>
+                <div class="dashboard-panels">
+                    <div class="panel">
+                        <h3>&#128293; Top Issued Books</h3>
+                        <div id="dashTopIssued"></div>
+                    </div>
+                    <div class="panel">
+                        <h3>&#128203; Currently Assigned</h3>
+                        <div id="dashCurrentAssigned"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ---------- ALL BOOKS ---------- -->
+            <section id="allBooks" class="page">
+                <h2 class="page-title">&#128214; All Books</h2>
+                <div class="toolbar">
+                    <select id="filterStatus" onchange="renderAllBooks()">
+                        <option value="all">All Status</option>
+                        <option value="available">Available Only</option>
+                        <option value="assigned">Assigned Only</option>
+                    </select>
+                    <select id="filterGenre" onchange="renderAllBooks()">
+                        <option value="all">All Genres</option>
+                    </select>
+                    <select id="sortBooks" onchange="renderAllBooks()">
+                        <option value="id">Sort by ID</option>
+                        <option value="title">Sort by Title</option>
+                        <option value="author">Sort by Author</option>
+                    </select>
+                </div>
+                <table class="data-table">
                     <thead>
-                        <tr><th>ID</th><th>Title</th><th>Author</th><th>Status</th><th>Actions</th></tr>
+                        <tr>
+                            <th>ID</th><th>Title</th><th>Author</th><th>Genre</th><th>Status</th><th>Issue Count</th><th>Actions</th>
+                        </tr>
                     </thead>
                     <tbody id="bookList"></tbody>
                 </table>
-            </div>
+            </section>
 
-            <!-- Add Book Form -->
-            <div id="add" class="section">
-                <h2>Add New Book</h2>
-                <form onsubmit="addBook(event)">
-                    <div class="form-group">
-                        <label>Title</label>
-                        <input id="title" required placeholder="Book title">
-                    </div>
-                    <div class="form-group">
-                        <label>Author</label>
-                        <input id="author" required placeholder="Author name">
-                    </div>
-                    <button type="submit" class="btn btn-purple">Add Book</button>
-                </form>
-            </div>
-
-            <!-- Assigned Books -->
-            <div id="assigned" class="section">
-                <h2>Assigned Books</h2>
-                <table>
+            <!-- ---------- ASSIGNED BOOKS ---------- -->
+            <section id="assignedBooks" class="page">
+                <h2 class="page-title">&#128203; Assigned Books</h2>
+                <table class="data-table">
                     <thead>
-                        <tr><th>ID</th><th>Title</th><th>User</th><th>Since</th><th>Duration</th><th>Action</th></tr>
+                        <tr>
+                            <th>ID</th><th>Title</th><th>Assigned To</th><th>Assigned On</th><th>Duration</th><th>Action</th>
+                        </tr>
                     </thead>
                     <tbody id="assignedList"></tbody>
                 </table>
-            </div>
-        </div>
+            </section>
+
+            <!-- ---------- ADD BOOK ---------- -->
+            <section id="addBook" class="page">
+                <h2 class="page-title">&#10133; Add New Book</h2>
+                <form class="add-form" onsubmit="addBook(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Book Title</label>
+                            <input id="inputTitle" required placeholder="Enter book title">
+                        </div>
+                        <div class="form-group">
+                            <label>Author Name</label>
+                            <input id="inputAuthor" required placeholder="Enter author name">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Genre</label>
+                            <select id="inputGenre" required>
+                                <option value="">Select genre</option>
+                                <option value="Programming">Programming</option>
+                                <option value="Web Development">Web Development</option>
+                                <option value="Data Science">Data Science</option>
+                                <option value="Database">Database</option>
+                                <option value="DevOps">DevOps</option>
+                                <option value="Design">Design</option>
+                                <option value="Fiction">Fiction</option>
+                                <option value="Science">Science</option>
+                                <option value="Mathematics">Mathematics</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>ISBN (optional)</label>
+                            <input id="inputISBN" placeholder="e.g. 978-3-16-148410-0">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">&#10133; Add Book</button>
+                </form>
+            </section>
+
+            <!-- ---------- MOST ISSUED ---------- -->
+            <section id="mostIssued" class="page">
+                <h2 class="page-title">&#128293; Most Issued / Assigned Books</h2>
+                <p class="page-desc">Books ranked by how many times they have been issued to readers.</p>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Rank</th><th>Title</th><th>Author</th><th>Genre</th><th>Times Issued</th><th>Current Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="mostIssuedList"></tbody>
+                </table>
+            </section>
+
+            <!-- ---------- ISSUE HISTORY ---------- -->
+            <section id="history" class="page">
+                <h2 class="page-title">&#128336; Issue History</h2>
+                <p class="page-desc">Complete log of all book issue and return transactions.</p>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>#</th><th>Book</th><th>User</th><th>Action</th><th>Date &amp; Time</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyList"></tbody>
+                </table>
+            </section>
+
+            <!-- ---------- SEARCH & FILTER ---------- -->
+            <section id="searchBooks" class="page">
+                <h2 class="page-title">&#128269; Search &amp; Filter</h2>
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Type book title, author or genre..." oninput="performSearch()">
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th><th>Title</th><th>Author</th><th>Genre</th><th>Status</th><th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="searchResults"></tbody>
+                </table>
+            </section>
+
+        </main>
     </div>
 
-    <!-- Assign Modal -->
+    <!-- ========== ASSIGN MODAL ========== -->
     <div id="modal" class="modal">
         <div class="modal-box">
-            <h3>Assign Book</h3>
-            <p id="modalTitle"></p>
+            <div class="modal-header">
+                <h3>&#128203; Assign Book</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <p id="modalTitle" class="modal-subtitle"></p>
             <div class="form-group">
                 <label>User Name</label>
-                <input id="userName" required placeholder="Enter name">
+                <input id="userName" required placeholder="Enter borrower's name">
             </div>
-            <button class="btn btn-green" onclick="confirmAssign()">Assign</button>
-            <button class="btn btn-red" onclick="closeModal()">Cancel</button>
+            <div class="modal-actions">
+                <button class="btn btn-success" onclick="confirmAssign()">Assign Book</button>
+                <button class="btn btn-danger" onclick="closeModal()">Cancel</button>
+            </div>
         </div>
     </div>
 

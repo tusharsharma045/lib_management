@@ -1,95 +1,82 @@
 # Library Management System
 
-A simple CLI-based library management system for beginners built with Python.
+A browser-based library management app built with vanilla HTML, CSS, and JavaScript. Designed as an intermediate-level project with a full sidebar navigation, dashboard, book tracking, issue history, and search functionality.
+
+## Preview
+
+> Open `index.html` directly in any browser — no server or installation needed.
 
 ## Features
 
-- View all books in the library
-- Add new books
-- Delete books
-- Assign books to users
-- Return books
-- Track borrowing time for each user
+- **Dashboard** — live stats (total books, available, assigned, total issues) with top issued books and currently assigned panel
+- **View All Books** — filterable and sortable table of all 20 books by status, genre, or name
+- **Assigned Books** — list of all currently borrowed books with borrower name, date, and live duration
+- **Add New Book** — form to add a book with title, author, genre, and optional ISBN
+- **Most Issued Books** — ranked list of books by how many times they have been issued
+- **Issue History** — full log of every issue and return transaction
+- **Search & Filter** — real-time search across title, author, and genre
+
+## Project Structure
+
+```
+lib-management/
+├── index.html    - Main HTML layout (navbar, sidebar, content sections)
+├── style.css     - All styling (navbar, sidebar, tables, cards, modals)
+├── script.js     - All logic (data, rendering, actions, navigation)
+└── README.md     - This file
+```
+
+## Tech Stack
+
+| Technology | Usage |
+|------------|-------|
+| HTML5 | Structure and layout |
+| CSS3 | Styling, flexbox/grid, animations |
+| Vanilla JS | All logic, DOM manipulation, state |
 
 ## Getting Started
 
-### Prerequisites
-
-- Python 3.x installed on your system
-
-### Running the Application
+1. Clone or download the repository
+2. Open `index.html` in a browser
 
 ```bash
-python library.py
+# Or serve locally with any static server
+npx serve .
 ```
 
-## Usage
+## Pre-loaded Data
 
-When you run the program, you'll see a menu with these options:
+The system comes with **20 books** across multiple genres:
 
-```
-==================================================
-       LIBRARY MANAGEMENT SYSTEM
-==================================================
-1. View All Books
-2. Add New Book
-3. Delete Book
-4. Assign Book to User
-5. Return Book
-6. View Assigned Books
-7. Exit
-==================================================
-```
+| Genre | Example Titles |
+|-------|----------------|
+| Programming | Clean Code, Eloquent JavaScript, Design Patterns |
+| Web Development | HTML & CSS: Design, React Up & Running |
+| Data Science | Machine Learning Yearning, Deep Learning |
+| Database | Learning SQL, MongoDB: The Definitive Guide |
+| DevOps | Docker in Action, Pro Git |
+| Design | Don't Make Me Think |
 
-### Menu Options
+**5 books are pre-assigned** to users (Aman Sharma, Priya Patel, Ravi Kumar, Sneha Gupta, Karan Singh) with realistic issue dates.
 
-| Option | Description |
-|--------|-------------|
-| 1 | View all books with their availability status |
-| 2 | Add a new book (title and author) |
-| 3 | Delete a book from the library |
-| 4 | Assign a book to a user (tracks time) |
-| 5 | Return a book (shows borrowing duration) |
-| 6 | View all currently assigned books |
-| 7 | Exit the program |
+## Navigation
 
-## Default Books
+The sidebar menu is organized into three groups:
 
-The system comes with 5 pre-loaded books:
+**Main**
+- Dashboard
+- View All Books
+- Assigned Books
 
-1. Python Basics - John Smith
-2. Learn JavaScript - Jane Doe
-3. Data Structures - Mike Johnson
-4. Web Development - Sarah Wilson
-5. Machine Learning - David Brown
+**Manage**
+- Add New Book
+- Most Issued Books
+- Issue History
 
-## Example Usage
-
-### Adding a Book
-```
-Enter your choice (1-7): 2
-Enter book title: Introduction to AI
-Enter author name: Alice Cooper
-Book 'Introduction to AI' added successfully with ID: 6
-```
-
-### Assigning a Book
-```
-Enter your choice (1-7): 4
-Enter book ID to assign: 1
-Enter user name: John
-Book 'Python Basics' assigned to John
-Assigned at: 2026-02-05 10:30:00
-```
-
-### Returning a Book
-```
-Enter your choice (1-7): 5
-Enter book ID to return: 1
-Book 'Python Basics' returned by John
-Duration: 0 hours, 15 minutes, 30 seconds
-```
+**Tools**
+- Search & Filter
 
 ## License
 
-This project is open source and available for educational purposes.
+Open source — free to use for learning and educational purposes.
+
