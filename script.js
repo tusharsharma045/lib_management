@@ -285,7 +285,7 @@ function renderBookRows(entries) {
     `).join('');
 }
 
-// ─── ASSIGNED BOOKS ──────────────────────────────────
+// ─── ASSIGNED BOOKS ─
 
 function renderAssigned() {
     const entries = Object.entries(assigned);
@@ -305,7 +305,7 @@ function renderAssigned() {
     `).join('');
 }
 
-// ─── ADD BOOK ────────────────────────────────────────
+// ─── ADD BOOK ───
 
 function addBook(e) {
     e.preventDefault();
@@ -321,7 +321,7 @@ function addBook(e) {
     navigate('allBooks', document.querySelector('[data-section="allBooks"]'));
 }
 
-// ─── MOST ISSUED ─────────────────────────────────────
+// ─── MOST ISSUED ───
 
 function renderMostIssued() {
     const sorted = Object.entries(books)
@@ -346,7 +346,7 @@ function renderMostIssued() {
     `).join('');
 }
 
-// ─── HISTORY ─────────────────────────────────────────
+// ─── HISTORY ───────
 
 function renderHistory() {
     if (!historyLog.length) {
@@ -367,7 +367,7 @@ function renderHistory() {
     `).join('');
 }
 
-// ─── SEARCH ──────────────────────────────────────────
+// ─── SEARCH ───
 
 function performSearch() {
     const q = $('searchInput').value.trim().toLowerCase();
@@ -387,7 +387,7 @@ function performSearch() {
         : '<tr><td colspan="6" class="empty">No books found</td></tr>';
 }
 
-// ─── BOOK ACTIONS (Assign / Return / Delete) ─────────
+// ─── BOOK ACTIONS (Assign / Return / Delete) 
 
 function deleteBook(id) {
     if (!confirm(`Delete "${books[id].title}"?`)) return;
@@ -443,6 +443,5 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && $('modal').classList.contains('show')) closeModal();
 });
 
-// ─── INIT ────────────────────────────────────────────
-
+// ─── INIT ────
 document.addEventListener('DOMContentLoaded', () => renderDashboard());
