@@ -96,6 +96,7 @@ let historyLog = [
 
 let nextId = 61;
 let currentBookId = null;
+const OVERDUE_DAYS = 15;
 
 // ─── HELPERS ─────────────────────────────────────────
 
@@ -116,6 +117,23 @@ function formatDuration(isoDate) {
     if (d > 0) return `${d}d ${h}h ${m}m`;
     if (h > 0) return `${h}h ${m}m`;
     return `${m}m`;
+}
+
+function getBorrowDays(isoDate) {
+    return Math.floor((Date.now() - new Date(isoDate)) / 86400000);
+}
+
+function getOverdueAssignments() {
+    return Object.entries(assigned)
+        .map(([id, info]) => ({ id, ...info, days: getBorrowDays(info.time) }))
+        .filter(item => item.days > OVERDUE_DAYS)
+        .sort((a, b) => b.days - a.days);
+}
+
+function isOverdueAssignment(id) {
+    const record = assigned[id];
+    if (!record) return false;
+    return getBorrowDays(record.time) > OVERDUE_DAYS;
 }
 
 // Re-render whichever page is currently active
@@ -181,6 +199,24 @@ function renderDashboard() {
                 <span class="dash-title">${a.title}</span>
                 <span class="dash-user">${a.user}</span>
                 <span class="dash-badge">${formatDuration(a.time)}</span>
+            </div>
+        `).join('');
+
+    renderReminderFeed();
+}
+
+function renderReminderFeed() {
+    const overdue = getOverdueAssignments();
+
+    $('reminderFeed').innerHTML = overdue.length === 0
+        ? '<p class="empty-text">No overdue books right now</p>'
+        : overdue.map(item => `
+            <div class="dash-row reminder-row">
+                <div class="reminder-content">
+                    <span class="dash-title">${item.title}</span>
+                    <span class="dash-user">${item.user}</span>
+                </div>
+                <span class="dash-badge reminder-badge">${item.days} days</span>
             </div>
         `).join('');
 }
@@ -279,7 +315,8 @@ function renderBookRows(entries) {
                 ${b.available
                     ? `<button class="btn btn-success btn-sm" onclick="openModal(${id})">Assign</button>
                        <button class="btn btn-danger btn-sm" onclick="deleteBook(${id})">Delete</button>`
-                    : `<button class="btn btn-info btn-sm" onclick="returnBook(${id})">Return</button>`}
+                    : `<button class="btn btn-info btn-sm" onclick="returnBook(${id})">Return</button>
+                       ${isOverdueAssignment(id) ? `<button class="btn btn-warning btn-sm" onclick="sendReminder(${id})">Reminder</button>` : ''}`}
             </td>
         </tr>
     `).join('');
@@ -300,7 +337,10 @@ function renderAssigned() {
             <td>${a.user}</td>
             <td>${new Date(a.time).toLocaleString()}</td>
             <td>${formatDuration(a.time)}</td>
-            <td><button class="btn btn-info btn-sm" onclick="returnBook(${id})">Return</button></td>
+            <td>
+                <button class="btn btn-info btn-sm" onclick="returnBook(${id})">Return</button>
+                ${isOverdueAssignment(id) ? `<button class="btn btn-warning btn-sm" onclick="sendReminder(${id})">Reminder</button>` : ''}
+            </td>
         </tr>
     `).join('');
 }
@@ -359,7 +399,7 @@ function renderHistory() {
             <td>${reversed.length - i}</td>
             <td><strong>${h.book}</strong></td>
             <td>${h.user}</td>
-            <td><span class="action-badge ${h.action === 'Issued' ? 'action-issued' : 'action-returned'}">
+            <td><span class="action-badge ${h.action === 'Issued' ? 'action-issued' : h.action === 'Returned' ? 'action-returned' : 'action-reminder'}">
                 ${h.action}
             </span></td>
             <td>${new Date(h.date).toLocaleString()}</td>
@@ -436,6 +476,22 @@ function returnBook(id) {
 
     showAlert(`"${a.title}" returned by ${a.user}.`, 'success');
     refreshCurrentPage();
+}
+
+function sendReminder(id) {
+    const a = assigned[id];
+    if (!a) return;
+    if (!isOverdueAssignment(id)) {
+        showAlert(`Reminder allowed only after ${OVERDUE_DAYS} days.`, 'error');
+        return;
+    }
+
+    historyLog.push({ book: a.title, user: a.user, action: 'Reminder Sent', date: new Date().toISOString() });
+    showAlert(`Reminder sent to ${a.user} for "${a.title}".`, 'success');
+
+    if (document.querySelector('.page.active')?.id === 'history') {
+        renderHistory();
+    }
 }
 
 // Close modal on Escape key
